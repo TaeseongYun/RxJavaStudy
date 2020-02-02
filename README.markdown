@@ -6,6 +6,6 @@
 
 - RxJava 기본함수
 
-- RxJava 응용함수
+- [RxJava 응용함수](https://github.com/TaeseongYun/RxJavaStudy/tree/master/ConjugationFunction/BindFunction)
 
 - RxJava Scheduler
