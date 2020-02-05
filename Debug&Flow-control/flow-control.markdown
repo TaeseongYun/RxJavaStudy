@@ -56,3 +56,34 @@ val array = arrayOf("1", "2", "3", "4", "5", "6")
 그 반대로 throttleLast를 알아보자
 
 1이 들어오고 2가 들어오고 반대로 2초가 지나기전에 들어왔던 숫자 3, 3이 들어오고 2초가 지나기전 숫자 5가 찍히게 된다.
+
+### debounce 함수
+
+이전에 behaviorsubject를 이용해서 버튼을 빠르게 눌렀을 때 마지막 누른 값을 받아오게 하는 코드를 작성하려 했었다. 처음엔 다른 흐름제어함수를 사용하지않고 그저 onClick 이벤트가 발생하면 그 즉시 onNext로 다음 데이터 넘겨주고 subscribe로 넘겨준 마지막 가장 최근 데이터를 UI에 뿌려주는 형식으로 구현했으나 데이터를 구독하는 속도보다 발행하는 속도가 너무 빨라 UI가 튀는 현상이 주로 발견되었다.
+
+흐름제어 함수를 알기전에는 delay도 사용해보고 zipWith으로 다른 Observable.timer도 이용해보고 수많은 여러 방법들을 시도해봤지만 똑같은 결론이 나왔다. -> UI튀는현상!
+
+수많은 시행착오끝에 debouce를 알게되었다.
+
+일반 POJO Java 처럼 콘솔에서는 크케 활용할 일이 없지만 안드로이드와 같이 UI 에서는 활용도가 뛰어나다 라고한다. 실행 결과를 알아보자
+
+ex)
+
+```kotlin
+val listData = listOf("1", "2", "3", "5")
+
+val source = Observable.concat(
+        Observable.timer(100L, TimeUnit.MILLISECONDS).map { listData[0] },
+        Observable.timer(100L, TimeUnit.MILLISECONDS).map { listData[1] },
+        Observable.timer(300L, TimeUnit.MILLISECONDS).map { listData[2] },
+        Observable.timer(300L, TimeUnit.MILLISECONDS).map { listData[3] }
+    ).debounce(200L, TimeUnit.MILLISECONDS)
+
+        disposable += source.subscribe {
+            LogUtil.d(it)
+        }
+```
+
+결과물 -> 2, 3, 5
+
+왜 ? debouce는 매개변수로 지정된 시간이 지나서 어떤 이벤트가 발생하지 않으면 예를들어 onNext, onClick... 마지막에 입력된 데이터를 발행한다. 마지막에 입력된 데이터를 발행하기 때문에 debouce가 2초 일 때 listData[0], listData[1]이 두개 동시에 발행됬지만 마지막 데이터를 발행하기 때문에 listData[1] 을 발행
