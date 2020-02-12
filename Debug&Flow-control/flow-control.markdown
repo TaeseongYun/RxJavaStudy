@@ -86,4 +86,8 @@ val source = Observable.concat(
 
 결과물 -> 2, 3, 5
 
-왜 ? debouce는 매개변수로 지정된 시간이 지나서 어떤 이벤트가 발생하지 않으면 예를들어 onNext, onClick... 마지막에 입력된 데이터를 발행한다. 마지막에 입력된 데이터를 발행하기 때문에 debouce가 2초 일 때 listData[0], listData[1]이 두개 동시에 발행됬지만 마지막 데이터를 발행하기 때문에 listData[1] 을 발행
+왜 ? debounce는 매개변수로 지정된 시간이 지나서 어떤 이벤트가 발생하지 않으면 예를들어 onNext, onClick... 마지막에 입력된 데이터를 발행한다. 마지막에 입력된 데이터를 발행하기 때문에 debouce가 2초 일 때 listData[0], listData[1]이 두개 동시에 발행됬지만 마지막 데이터를 발행하기 때문에 listData[1] 을 발행
+
+## debounce에 또 하나 알게된 점.
+
+처음에는 debounce가 모든 Observable 클래스에 존재하는 줄 알았지만 Single에는 존재하지 않는 함수이다. 그 이유는 Single이란 클래스는 한번만 호출하는 Observable 연산자 이기 때문에 여러번의 비동기적인 이벤트가 발생하는경우가 없기 때문에 debounce로 비동기적 으로 일어난 이벤트에 대해 시간을 두고 마지막에 일어난 이벤트를 처리할 필요가 없다(개인적인 생각)
