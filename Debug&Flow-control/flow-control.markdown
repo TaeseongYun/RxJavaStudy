@@ -91,3 +91,35 @@ val source = Observable.concat(
 ## debounce에 또 하나 알게된 점.
 
 처음에는 debounce가 모든 Observable 클래스에 존재하는 줄 알았지만 Single에는 존재하지 않는 함수이다. 그 이유는 Single이란 클래스는 한번만 호출하는 Observable 연산자 이기 때문에 여러번의 비동기적인 이벤트가 발생하는경우가 없기 때문에 debounce로 비동기적 으로 일어난 이벤트에 대해 시간을 두고 마지막에 일어난 이벤트를 처리할 필요가 없다(개인적인 생각)
+
+### 2. buffer 함수.
+
+최근 뒤로가기 두번 눌렀을 때 if문으로 말고 Rxjava함수를 이용하여 어떻게 구현해볼까 곰곰히 생각하다 우연히 발견한 뱅크샐러드 미디엄 블로그를 보았다.
+블로그를 보기 전에는 BehaviorSubject로 onNext를 Pair클래스로 받아서 참으로 어렵게 구현시도를 한적이 있었다.
+buffer는 다른 이론수업 때 들었던 버퍼를 생각하면 쉽다. 매개변수로 int형을 받는데 해당 매개변수를 버퍼에 담을 크기를 말한다. 즉 몇개를 담을것인가를 정하는게 바로 매개변수 이다.
+
+또한 또 하나의 매개변수가 들어오는데 해당 매개변수는 예를들어 버퍼사이즈가 2이고 그 다음 매개변수가 1 이면 가장 오래된 데이터 하나를 지우고 다음 데이터를 받아오겠다 라는 뜻이다. 코드를 통해 알아보자.
+
+```kotlin
+val mapTestList = listOf("1", "2", "3", "4")
+
+val observable = Observable.fromIterable(mapTestList).flatMap {
+            Observable.just<String>("$it<> + $it<->")
+}
+
+ disposable += observable
+            .subscribeOn(Schedulers.io())
+            .buffer(3,3)
+            .subscribe({ LogUtil.d(it.toString()) }, {})
+```
+
+다음 코드는 어떻게 찍힐것인가? 우선 버퍼에는 3개가 담긴다. 그러므로 처음에는 [1<> 1<->, 2<> 2<->, 3<> 3<->] 이렇게 담길것이다.
+
+하지만 뒤에 또 3이라는 매개변수가 들어왔다. 그말인 즉슨 가장 오래된 데이터 3개를 지우겠다. 라는 뜻이다. 가장오래된 데이터는 1,2,3 따라서 해당 버퍼에 담겨져있는 데이터는 모두 지워진다.
+
+이로인해 마지막 4가 담겨져 나온다.
+
+결과값
+
+D/MOVIE-APP: [1<> + 1<->, 2<> + 2<->, 3<> + 3<->]
+D/MOVIE-APP: [4<> + 4<->]
