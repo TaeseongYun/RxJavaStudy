@@ -55,7 +55,7 @@
 
     koin의 viewModel을 들어가보면 모듈의 확장함수가 나오게 된다.
 
-    ![koin-viewmodel함수](../../RxJava/img/koin_viewmodel.png)
+    ![koin-viewmodel함수](../../RxJava/img/koin_viewModel.png)
 
     함수를 보게되면 factory 모듈 함수가 하나 존재하는데 해당 함수는 inject 할 때마다  새로운 객체를 생성한다.
 
