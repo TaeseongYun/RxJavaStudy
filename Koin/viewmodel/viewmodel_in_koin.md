@@ -48,7 +48,7 @@
   ViewModelProvider.Factory는 ViewModel을 인스턴스(객체)화 하기위해 자체적 구현이 필요. 즉 ViewModel은 액티비티나 프래그먼트에서 따로 객체를 생성할 수 없기 때문에 뷰 모델의 constructor에서 인자값이 존재 할 시 객체를 만드려면 ViewModelProvider.Factory를 통해서 만들어 줘야한다.
   그럼 ViewModelProvider.Factory에서는 ViewModel의 객체를 만들어 줄 것이다.
 
-## Koin의 viewModel
+## Koin의 viewModel(model의 확장함수.)
 
 - 이제 그럼 본격적으로 koin의 viewModel에 들어가 보도록하자.
 
