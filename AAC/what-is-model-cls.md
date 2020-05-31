@@ -27,3 +27,6 @@ MVVM 이라 하면 Model View ViewModle 이렇게 나눠지는 패턴이다. 뷰
 해당 변경에 관련된 뷰를 새롭게 뿌려주는 형식이다.
 
 하지만 보통 개발자들은 AAC ViewModel과 MVVM의 ViewModel을 헷갈려한다. (보통 두개 같은 것 이라고 알고있다.)
+
+두 개 차이점을 보자하면 ViewModel은 정말 View에 대한 데이터를 가지고 있는 ViewModel 클래스이고 AAC ViewModel은 보통 액티비티의 로케이트가 변경 되면 뷰의 데이터가 사라진다.
+간단한 데이터 같은 경우는 `onSaveInstanceState()` 에서 번들로 처리하여 `onCreate()`의 번들로 가져오는 형식으로 구현한다.
