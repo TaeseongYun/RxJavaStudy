@@ -30,3 +30,22 @@ MVVM 이라 하면 Model View ViewModle 이렇게 나눠지는 패턴이다. 뷰
 
 두 개 차이점을 보자하면 ViewModel은 정말 View에 대한 데이터를 가지고 있는 ViewModel 클래스이고 AAC ViewModel은 보통 액티비티의 로케이트가 변경 되면 뷰의 데이터가 사라진다.
 간단한 데이터 같은 경우는 `onSaveInstanceState()` 에서 번들로 처리하여 `onCreate()`의 번들로 가져오는 형식으로 구현한다.
+
+
+## Android Clean Architecture
+
+이번 첫 멀티모듈을 도입하게 되면서 클린 아키택처를 고려하게되었다.
+
+개발자에 따라 계층이 나뉘어지는데 보통 계층은 다음과 같이 나누어진다.
+
+- entity
+
+- data
+
+- domain 
+
+- presenter
+
+- remote(개발자가 remote 단 까지 나누었을 때.)
+
+- local (개발자가 local 단 까지 나누었을 때.)

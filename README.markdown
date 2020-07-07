@@ -6,9 +6,9 @@
 
 - RxJava 기본함수
 
-- [RxJava 응용함수](https://github.com/TaeseongYun/RxJavaStudy/tree/master/ConjugationFunction/BindFunction)
+- [RxJava 응용함수](https://github.com/TaeseongYun/RxJavaStudy/blob/master/ConjugationFunction/BindFunction/bindfunction.markdown)
 
-- [RxJava Scheduler](https://github.com/TaeseongYun/RxJavaStudy/tree/master/Scheduler)
+- [RxJava Scheduler](https://github.com/TaeseongYun/RxJavaStudy/blob/master/Scheduler/subscribeOn%26observeOn.md)
 
 - [RxJava 흐름제어](https://github.com/TaeseongYun/RxJavaStudy/blob/master/Debug%26Flow-control/flow-control.markdown)
 
