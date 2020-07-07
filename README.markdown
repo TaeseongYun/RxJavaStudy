@@ -19,3 +19,7 @@
 - Koin 모듈이란
 
 - [Koin 뷰 모델](https://github.com/TaeseongYun/RxJavaStudy/blob/master/Koin/viewmodel/viewmodel_in_koin.md)
+
+# AAC Design Architecture
+
+- [AAC](https://github.com/TaeseongYun/RxJavaStudy/blob/master/AAC/what-is-model-cls.md)
