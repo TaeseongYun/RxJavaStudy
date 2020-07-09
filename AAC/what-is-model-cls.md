@@ -31,21 +31,47 @@ MVVM 이라 하면 Model View ViewModle 이렇게 나눠지는 패턴이다. 뷰
 두 개 차이점을 보자하면 ViewModel은 정말 View에 대한 데이터를 가지고 있는 ViewModel 클래스이고 AAC ViewModel은 보통 액티비티의 로케이트가 변경 되면 뷰의 데이터가 사라진다.
 간단한 데이터 같은 경우는 `onSaveInstanceState()` 에서 번들로 처리하여 `onCreate()`의 번들로 가져오는 형식으로 구현한다.
 
-
 ## Android Clean Architecture
 
 이번 첫 멀티모듈을 도입하게 되면서 클린 아키택처를 고려하게되었다.
 
-개발자에 따라 계층이 나뉘어지는데 보통 계층은 다음과 같이 나누어진다.
+개발자에 따라 계층이 나뉘어지는데 보통 계층은 다음과 같이 나누어진다. (엔티티부터 아래로 내려갈 수록 의존성이 생긴다.)
 
 - entity
 
 - data
 
-- domain 
+- domain
 
 - presenter
 
 - remote(개발자가 remote 단 까지 나누었을 때.)
 
 - local (개발자가 local 단 까지 나누었을 때.)
+
+다음 나열한 계층일 하나씩 알아보겠다.
+
+### Entity 레이어
+
+먼저 엔티티 레이어이다. 보통 엔티티 레이어라 함은 오로지 Java와 Kotlin으로만 이루어져 있는 모듈을 말한다. 안드로이드의 의존성은 아예 없다.
+
+만약 개발자가 todo앱을 만든다 함은 Parcelable의 필요성을 못 느끼게 될것이다.
+
+해당 레이어는 제가 따로 구현해보지 않아서 [안드로이드 클릭 아키텍처 구현해보기](https://academy.realm.io/kr/posts/clean-architecture-in-android/)에서 일부를 따왔습니다.
+
+구현을 하게되면 다음과 같은 Entity 코드가 있을것이다.
+
+```kotlin
+data class EntityClass(
+    val name: String,
+    val age: Int
+)
+```
+
+여기서 가장 중요한점은 해당 `EntitlClass` 의 클래스가 어떤 `Realm`이라던지 `Room`의 개념이 들어가서는 `절대 안된다`.
+
+개념이 들어가게되면 Room 이나 Realm에서 데이터를 바꾸는 순간, Entity 레이어에 영향이 미치기 때문이다.
+
+내용과는 별개로 지금까지 entity 레이어를 구현하지 않고 data 레이어 에서 구현을 하였었다.
+
+### domain 레이어
